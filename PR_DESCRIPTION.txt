@@ -1,0 +1,13 @@
+What was done?
+- Product Service deployed with AWS CDK: HTTP API (API Gateway v2), GET /products -> getProductsList Lambda, GET /products/{productId} -> getProductsById Lambda (mock data in repo). CORS enabled for browser PLP; 404 { "message": "Product not found" } for unknown id.
+- openapi.yaml in repository (Swagger Editor).
+- Unit tests for findProductById and jsonResponse (lambda logic only, no CDK).
+- Frontend branch: PLP loads from VITE_PRODUCT_SERVICE_URL + /products (see linked FE PR).
+
+Link to Product Service API:
+- (paste ProductHttpApiUrl stack output after deploy, e.g. https://xxxx.execute-api.REGION.amazonaws.com)
+
+Link to FE PR (your frontend repository):
+- (paste GitHub PR URL)
+
+Product schema (if not using Swagger): id (string), title (string), description (string), price (number), count (integer >= 0).

@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: Product Service
+  description: Task 3 HTTP API for product list and by-id
+  version: 1.0.0
+paths:
+  /products:
+    get:
+      summary: List products
+      operationId: getProductsList
+      responses:
+        "200":
+          description: Array of available products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AvailableProduct"
+  /products/{productId}:
+    get:
+      summary: Product by id
+      operationId: getProductsById
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AvailableProduct"
+        "400":
+          description: Missing product id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "404":
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+components:
+  schemas:
+    AvailableProduct:
+      type: object
+      required:
+        - id
+        - title
+        - description
+        - price
+        - count
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        count:
+          type: integer
+          minimum: 0
+    ErrorBody:
+      type: object
+      properties:
+        message:
+          type: string
