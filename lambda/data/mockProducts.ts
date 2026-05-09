@@ -1,10 +1,6 @@
-export type Product = {
-  description: string,
-  id: string,
-  price: number,
-  title: string,
-  count: number
-}
+import type { AvailableProduct } from "../types/product";
+
+export type Product = AvailableProduct;
 
 export const mockProducts: Product[] = [
   {
