@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Product Service
-  description: Task 3 HTTP API for product list and by-id
+  description: HTTP API for products (DynamoDB products + stocks)
   version: 1.0.0
 paths:
   /products:
@@ -17,6 +17,40 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/AvailableProduct"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+    post:
+      summary: Create product
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AvailableProduct"
+        "400":
+          description: Invalid body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
   /products/{productId}:
     get:
       summary: Product by id
@@ -46,8 +80,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorBody"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorBody"
 components:
   schemas:
+    CreateProductRequest:
+      type: object
+      required:
+        - title
+        - price
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: integer
+          minimum: 0
+        count:
+          type: integer
+          minimum: 0
     AvailableProduct:
       type: object
       required:
